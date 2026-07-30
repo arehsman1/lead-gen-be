@@ -1,0 +1,28 @@
+[Unit]
+Description=CalebReview Lead Intelligence API (FastAPI)
+After=network.target
+
+[Service]
+Type=simple
+# Adjust user/group and paths to match your VPS setup.
+User=caleb
+Group=caleb
+WorkingDirectory=/home/caleb/caleb-backend
+EnvironmentFile=/home/caleb/caleb-backend/.env
+ExecStart=/home/caleb/caleb-backend/.venv/bin/uvicorn app.main:app \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 2
+
+Restart=on-failure
+RestartSec=5
+
+# Basic hardening — remove/relax any of these if they cause issues with
+# your specific hosting setup.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/caleb/caleb-backend
+
+[Install]
+WantedBy=multi-user.target
